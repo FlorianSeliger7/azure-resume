@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -228,6 +230,39 @@
                 <li>Silicone Molds</li>
             </ul>
         </div>
+
+        <p>This page has been viewed <span id="Counter">loading...</span> times :)</p>
+
+        <script>
+            const functionApi = 'http://localhost:7071/api/GetResumeCounter';
+    
+            const getVisitCount = () => {
+                return fetch(functionApi)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const count = data.count || 'an unknown number of';
+                        document.getElementById("Counter").innerText = count;
+                        return count;
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        document.getElementById("Counter").innerText = "Error";
+                        return "Error";
+                    });
+            };
+    
+            // Call the function to get and display the visit count
+            getVisitCount().then(count => {
+                console.log(`Visit count is: ${count}`);
+            });
+        </script>
+
+    
 
         <div class="section">
            
