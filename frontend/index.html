@@ -234,10 +234,10 @@
         <p>This page has been viewed <span id="Counter">loading...</span> times :)</p>
 
         <script>
-            const functionApi = 'http://localhost:7071/api/GetResumeCounter';
+           // const functionApi = 'http://localhost:7071/api/GetResumeCounter';
     
             const getVisitCount = () => {
-                return fetch(functionApi)
+                return fetch(functionApiUrl)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
