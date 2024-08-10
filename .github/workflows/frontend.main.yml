@@ -23,7 +23,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "CDNresume" --name "CDNendpointResume" --resource-group "azureresumeflorian"
+           az cdn endpoint purge --content-paths  "/*" --profile-name "CDNresume" --name "CDNendpointResume" --resource-group "ResumeChallenge"
 
   # Azure logout
     - name: logout
