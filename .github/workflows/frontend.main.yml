@@ -1,35 +1,46 @@
-name: deploy_frontend
-# Deploy when a push is made to frontend files in the main branch
+name: deploy frontend
+#Deploy when push is made from frontend
 
 on:
-  push:
-    branches: [ main ]
-    paths: 
-      - 'frontend/**'
+    push:
+        branches: [ main ]
+        paths: 
+            - 'frontend/**'
   
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      # Azure login
-      - uses: azure/login@v1
-        with:
+    - uses: actions/checkout@v3
+    # Azure login
+    - uses: azure/login@v1
+      with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # Setup Azure CLI
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+    # Upload to Blob Storage
+        inlineScript: |
+            az storage blob upload-batch --account-name azureresumeflorian --auth-mode key -d '$web' -s .
+    - name: Purge CDN endpoint
+      uses: azure/CLI@v1
+      with:
+        # Purge CDN endpoint
+        inlineScript: |
+           az cdn endpoint purge --content-paths  "/*" --profile-name "CDNresume" --name "CDNendpointResume" --resource-group "ResumeChallenge"
 
-      # Upload to Blob Storage
-      - name: Upload to Blob Storage
-        run: |
-          az storage blob upload-batch --account-name azureresumeflorian --auth-mode key -d '$web' -s frontend/
-        
-      # Purge CDN endpoint
-      - name: Purge CDN endpoint
-        run: |
-          az cdn endpoint purge --content-paths "/*" --profile-name "CDNresume" --name "CDNendpointResume" --resource-group "ResumeChallenge"
-        
-      # Azure logout
-      - name: Logout from Azure
-        run: |
-          az logout
-        if: always()
+  # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
+
+
+
+
+
+
+
+
