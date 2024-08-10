@@ -2,10 +2,9 @@ name: deploy_frontend
 #Deploy when push is made from frontend
 
 on:
-        push:
+    push:
             branches: [ main ]
-            paths:
-                - 'frontend/**'
+            paths: [ frontend/** ]
   
 
 
