@@ -17,6 +17,14 @@ jobs:
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    # Delete existing blobs in the storage account
+    - name: Delete existing blobs
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob delete-batch --account-name azureresumeflorian --auth-mode key -s '$web'
+    
     # Setup Azure CLI
     - name: Upload to blob storage
       uses: azure/CLI@v1
