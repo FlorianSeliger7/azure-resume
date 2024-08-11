@@ -3,7 +3,7 @@
 
 # Azure Functions localsettings file
 local.settings.json
-bin/Debug/net8.0/local.settings.json
+bin/Debug/net6.0/local.settings.json
 
 # User-specific files
 *.suo
